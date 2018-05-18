@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -54,6 +54,8 @@ class ReflexAgent(Agent):
     def evaluationFunction(self, currentGameState, action):
         """
         Design a better evaluation function here.
+
+        hola alberto
 
         The evaluation function takes in the current and proposed successor
         GameStates (pacman.py) and returns a number, where higher numbers are better.
@@ -129,7 +131,68 @@ class MinimaxAgent(MultiAgentSearchAgent):
             Returns the total number of agents in the game
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        def minScore(state, depth, agentIndex):  #agentIndes: 0 = the pacman  1>= ghosts
+        #Recurive method going through att agents in the game.
+
+            legal_actions = state.getLegalActions(agentIndex)
+            Nbr_ghosts = gameState.getNumAgents() - 1;
+            score = float("inf")                            #score to +infinity , because min() is used
+
+            if state.isWin() or state.isLose() or depth == 0:
+                return self.evaluationFunction(state)
+
+            is_last_ghost = (agentIndex == Nbr_ghosts)
+            if is_last_ghost:
+                for action in legal_actions:
+                    successor= state.generateSuccessor(agentIndex, action)
+                    score = min(score, maxScore(successor, depth - 1))
+            else:
+                for action in legal_actions:
+                    successor = state.generateSuccessor(agentIndex,action)
+                    #recurvie here. checks against the next agent. and saves the lowest score.
+                    score = min(score, minScore(successor, depth, agentIndex + 1))
+
+            return score
+
+        def maxScore(state, depth):
+
+            Nbr_ghosts = gameState.getNumAgents() - 1;
+            score = -(float("inf"))                            #score set to negativ infinity since max() is used
+
+            if state.isWin() or state.isLose() or depth == 0:
+                return self.evaluationFunction(state)
+
+            for action in state.getLegalActions(0):
+                successor = state.generateSuccessor(0, action)   #successors for pacman
+                score = max(score, minScore(successor, depth - 1, 1))
+
+            return score
+
+        #THE CODE:
+        # Main:
+        # return action with the maxvalue from minScore()
+        # minScore:
+        # (If in terminal-state - return utiliy)
+        # return the min value from all actions maxScore()
+        # maxScore:
+        # (If in terminal-state - return utiliy)
+        # return the max value from all actions minScore()
+
+        score = -(float("inf"))
+        action = Directions.STOP #If no actions exsist in getLegalActions. it is put to STOP.
+
+        #The action with the highest score is used.
+        for next_action in gameState.getLegalActions():
+            if next_action != Directions.STOP:
+                score_old = score
+                next_state = gameState.generateSuccessor(0, next_action)  # gets successors for Pacman (0=pacman)
+                #Takes the largest number out of score and minScore() for the ghosts
+                score_new = max(score, minScore(next_state, self.depth, 1))  # depth default = 2.
+                if score_new > score_old:
+                    action = next_action
+                score=score_new     #to make the highest score being the one compare in next loop.
+
+        return action
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
@@ -170,4 +233,3 @@ def betterEvaluationFunction(currentGameState):
 
 # Abbreviation
 better = betterEvaluationFunction
-
