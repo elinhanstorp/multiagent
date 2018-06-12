@@ -23,22 +23,34 @@ print (" ")
 
 while (True):
 	num = input ("Ingrese el numero del nivel a jugar: ")
-	print (num)
+
+	depth = input ("Ingrese el depth por el pacman: ")
+	depth = 'depth='+ str(depth)
+
+	agentInput= input("Cual agante quieres? escribir 1 por MinimaxAgent y 2 por AlphaBetaAgent: ")
+	if (agentInput == 1):
+		agent = 'MinimaxAgent'
+	elif (agentInput == 2):
+		agent = 'AlphaBetaAgent'
+
+	print('The game is played with ', agent,' with a depth of ', depth, ' and level ', num, ' on the ghosts')
+
 
 	if (num == 1):
-		args = readCommand( ['-g','RandomGhost','-p', 'MinimaxAgent', '-l', 'smallClassic', '-a', 'depth=3','-k','1'])
+		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','1'])
 		runGames( **args )
 	elif (num == 2):
-		args = readCommand( ['-g','DirectionalGhost','-p', 'MinimaxAgent', '-l', 'smallClassic', '-a', 'depth=3','-k','1'])
+		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','1'])
 		runGames( **args )
 	elif (num == 3):
-		args = readCommand( ['-g','RandomGhost','-p', 'MinimaxAgent', '-l', 'smallClassic', '-a', 'depth=3','-k','3'])
+		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 4):
-		args = readCommand( ['-g','DirectionalGhost','-p', 'MinimaxAgent', '-l', 'smallClassic', '-a', 'depth=3','-k','3'])
+		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 5):
-		print ("FALTA IMPLEMENTAR")
+		args = readCommand( ['-g','TacticalGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
+		runGames( **args )
 	elif (num == 0):
 		break
 	else :
