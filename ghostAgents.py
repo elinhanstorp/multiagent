@@ -91,9 +91,6 @@ class TacticalGhost( GhostAgent ):
         # Read variables from state
         ghostState = state.getGhostState( self.index )
         legalActions = state.getLegalActions( self.index )
-        #possible solucion:
-        #See if the ghost friend is in the direction of the action.
-        #If it is: remove action as legal.
 
         pos = state.getGhostPosition( self.index )
         isScared = ghostState.scaredTimer > 0
@@ -104,6 +101,32 @@ class TacticalGhost( GhostAgent ):
         elif (self.index == 2):
             friendGhost = 1
 
+        posFriendGhost = state.getGhostPosition(friendGhost)
+
+        #print("pos ghostFriend: ", posFriendGhost, "my pos", pos)
+
+        # If more than 1 leagal action.
+        #Remove action if it goes to the same posision as friend-ghost
+        if(len(legalActions) > 1):
+            new_legalActions = list(legalActions)
+
+            for action in new_legalActions:
+                x,y = Actions.directionToVector(action)
+                px,py = pos
+
+                pos_plusOne = (px+x),(py+y)
+                #print("pos + : ", pos_plusOne, "friend: ", posFriendGhost)
+                if (pos_plusOne == posFriendGhost):
+                    print("It is true!")
+                    new_legalActions.remove(action)
+                    legalActions = new_legalActions
+                    break
+
+        #if(direction in new_legalActions) and len(new_legalActions) > 1:
+        #    new_legalActions.remove(direction)
+
+        #print("legal actions: ", legalActions, "new:", new_legalActions)
+
         speed = 1
         if isScared: speed = 0.5
 
@@ -111,26 +134,26 @@ class TacticalGhost( GhostAgent ):
         newPositions = [( pos[0]+a[0], pos[1]+a[1] ) for a in actionVectors]
 
         #Friend Ghost
-        posFriendGhost = state.getGhostPosition(friendGhost)
-        legalActionsFriend = state.getLegalActions(friendGhost)
-        actionVectorsFriend = [Actions.directionToVector( a, speed ) for a in legalActionsFriend]
-        newPositionsFriend = [( posFriendGhost[0]+a[0], pos[1]+a[1] ) for a in actionVectorsFriend]
+        #posFriendGhost = state.getGhostPosition(friendGhost)
+        #legalActionsFriend = state.getLegalActions(friendGhost)
+        #actionVectorsFriend = [Actions.directionToVector( a, speed ) for a in legalActionsFriend]
+        #newPositionsFriend = [( posFriendGhost[0]+a[0], pos[1]+a[1] ) for a in actionVectorsFriend]
 
         pacmanPosition = state.getPacmanPosition()
 
         # Select best actions given the state
         distancesToPacman = [manhattanDistance( pos, pacmanPosition ) for pos in newPositions]
-        distancesToPacmanFromFriend = [manhattanDistance( posFriendGhost, pacmanPosition ) for pos in newPositions]
+        #distancesToPacmanFromFriend = [manhattanDistance( posFriendGhost, pacmanPosition ) for pos in newPositions]
 
-        IsCloser = (distancesToPacman < distancesToPacmanFromFriend)
+        #IsCloser = (distancesToPacman < distancesToPacmanFromFriend)
 
         if isScared:
             bestScore = max( distancesToPacman )
             bestProb = self.prob_scaredFlee
         else:
             bestProb = self.prob_attack
-            if not IsCloser:
-                bestProb = bestProb - 0.1
+            #if not IsCloser:
+            #    bestProb = bestProb - 0.1
 
             bestScore = min( distancesToPacman )
 
