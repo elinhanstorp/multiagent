@@ -24,14 +24,16 @@ print (" ")
 while (True):
 	num = input ("Ingrese el numero del nivel a jugar: ")
 
-	depth = input ("Ingrese el depth por el pacman: ")
-	depth = 'depth='+ str(depth)
-
-	agentInput= input("Cual agante quieres? escribir 1 por MinimaxAgent y 2 por AlphaBetaAgent: ")
+	agentInput= input("Elija el algoritmo para el agente: 1)MiniMax 2)AlphaBeta: ")
 	if (agentInput == 1):
 		agent = 'MinimaxAgent'
 	elif (agentInput == 2):
 		agent = 'AlphaBetaAgent'
+
+	depth = input ("Ingrese la profundida para el agoritmo: ")
+	depth = 'depth='+ str(depth)
+
+	
 
 	print('The game is played with ', agent,' with a depth of ', depth, ' and level ', num, ' on the ghosts')
 
