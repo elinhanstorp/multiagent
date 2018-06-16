@@ -31,21 +31,21 @@ while (True):
 		agent = 'AlphaBetaAgent'
 
 	depth = input ("Ingrese la profundida para el agoritmo: ")
-	depth = 'depth='+ str(depth)
+	depth = str(depth)
 
 	
 
-	print('The game is played with ', agent,' with a depth of ', depth, ' and level ', num, ' on the ghosts')
+	print('Juego con algoritmo ', agent,' con una profundidad igual a ', depth, ' en el nivel ', num)
 
-
+	depth = 'depth='+ depth
 	if (num == 1):
-		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','1'])
+		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','1'])
 		runGames( **args )
 	elif (num == 2):
 		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','1'])
 		runGames( **args )
 	elif (num == 3):
-		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
+		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 4):
 		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','3'])
