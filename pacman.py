@@ -111,6 +111,7 @@ class GameState:
         # Time passes
         if agentIndex == 0:
             state.data.scoreChange += -TIME_PENALTY # Penalty for waiting around
+            state.data.tiempoChange += TIME_PENALTY
         else:
             GhostRules.decrementTimer( state.data.agentStates[agentIndex] )
 
@@ -120,6 +121,7 @@ class GameState:
         # Book keeping
         state.data._agentMoved = agentIndex
         state.data.score += state.data.scoreChange
+        state.data.tiempo += state.data.tiempoChange
         GameState.explored.add(self)
         GameState.explored.add(state)
         return state
@@ -166,6 +168,8 @@ class GameState:
 
     def getScore( self ):
         return float(self.data.score)
+    def getTiempo( self ):
+        return float(self.data.tiempo)
 
     def getCapsules(self):
         """
@@ -289,11 +293,11 @@ class ClassicGameRules:
         if state.isLose(): self.lose(state, game)
 
     def win( self, state, game ):
-        if not self.quiet: print "Pacman emerges victorious! Score: %d" % state.data.score
+        if not self.quiet: print "Pacman emerges victorious! Score: %d   Tiempo: %d" % (state.data.score,state.data.tiempo)
         game.gameOver = True
 
     def lose( self, state, game ):
-        if not self.quiet: print "Pacman died! Score: %d" % state.data.score
+        if not self.quiet: print "Pacman died! Score: %d   Tiempo: %d" % (state.data.score,state.data.tiempo)
         game.gameOver = True
 
     def getProgress(self, game):
@@ -656,10 +660,13 @@ def runGames( layout, pacman, ghosts, display, numGames, record, numTraining = 0
 
     if (numGames-numTraining) > 0:
         scores = [game.state.getScore() for game in games]
+        tiempos = [game.state.getTiempo() for game in games]
         wins = [game.state.isWin() for game in games]
         winRate = wins.count(True)/ float(len(wins))
         print 'Average Score:', sum(scores) / float(len(scores))
         print 'Scores:       ', ', '.join([str(score) for score in scores])
+        print 'Tiempo:       ', ', '.join([str(tiempo) for tiempo in tiempos])
+
         print 'Win Rate:      %d/%d (%.2f)' % (wins.count(True), len(wins), winRate)
         print 'Record:       ', ', '.join([ ['Loss', 'Win'][int(w)] for w in wins])
 

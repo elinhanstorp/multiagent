@@ -383,6 +383,8 @@ class GameStateData:
             self.layout = prevState.layout
             self._eaten = prevState._eaten
             self.score = prevState.score
+            self.tiempo = prevState.tiempo
+
 
         self._foodEaten = None
         self._foodAdded = None
@@ -391,6 +393,7 @@ class GameStateData:
         self._lose = False
         self._win = False
         self.scoreChange = 0
+        self.tiempoChange = 0
 
     def deepCopy( self ):
         state = GameStateData( self )
@@ -418,6 +421,7 @@ class GameStateData:
         if not self.food == other.food: return False
         if not self.capsules == other.capsules: return False
         if not self.score == other.score: return False
+        if not self.tiempo == other.tiempo: return False
         return True
 
     def __hash__( self ):
@@ -430,6 +434,7 @@ class GameStateData:
             except TypeError, e:
                 print e
                 #hash(state)
+                #tiempo
         return int((hash(tuple(self.agentStates)) + 13*hash(self.food) + 113* hash(tuple(self.capsules)) + 7 * hash(self.score)) % 1048575 )
 
     def __str__( self ):
@@ -455,7 +460,7 @@ class GameStateData:
         for x, y in self.capsules:
             map[x][y] = 'o'
 
-        return str(map) + ("\nScore: %d\n" % self.score)
+        return str(map) + ("\nScore: %d\n" % self.score) + ("\nTiempo: %d\n" % self.tiempo)
 
     def _foodWallStr( self, hasFood, hasWall ):
         if hasFood:
@@ -494,6 +499,8 @@ class GameStateData:
         self.layout = layout
         self.score = 0
         self.scoreChange = 0
+        self.tiempo = 0
+        self.tiempoChange = 0
 
         self.agentStates = []
         numGhosts = 0

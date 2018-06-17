@@ -39,19 +39,19 @@ while (True):
 
 	depth = 'depth='+ depth
 	if (num == 1):
-		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','1'])
+		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','1'])
 		runGames( **args )
 	elif (num == 2):
-		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','1'])
+		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','1'])
 		runGames( **args )
 	elif (num == 3):
-		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','3'])
+		args = readCommand( ['-g','RandomGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 4):
-		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','3'])
+		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 5):
-		args = readCommand( ['-g','TacticalGhost','-p', agent, '-l', 'mediumClassic', '-a', depth,'-k','3'])
+		args = readCommand( ['-g','TacticalGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 0):
 		break
