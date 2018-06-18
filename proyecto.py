@@ -33,7 +33,7 @@ while (True):
 	depth = input ("Ingrese la profundida para el agoritmo: ")
 	depth = str(depth)
 
-	
+
 
 	print('Juego con algoritmo ', agent,' con una profundidad igual a ', depth, ' en el nivel ', num)
 
@@ -51,7 +51,7 @@ while (True):
 		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 5):
-		args = readCommand( ['-g','TacticalGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
+		args = readCommand( ['-g','TacticalGhost','-p', agent, '-l', 'originalClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 0):
 		break
