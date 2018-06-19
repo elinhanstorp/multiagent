@@ -51,7 +51,7 @@ while (True):
 		args = readCommand( ['-g','DirectionalGhost','-p', agent, '-l', 'smallClassic', '-a', depth,'-k','3'])
 		runGames( **args )
 	elif (num == 5):
-		args = readCommand( ['-g','TacticalGhost','-p', agent, '-l', 'originalClassic', '-a', depth,'-k','3'])
+		args = readCommand( ['-g','TacticalGhost','-p', agent, '-l', 'originalClassic', '-z .5','-a', depth,'-k','4'])
 		runGames( **args )
 	elif (num == 0):
 		break

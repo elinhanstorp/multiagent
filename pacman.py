@@ -11,7 +11,7 @@
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
-# Hejhej, testrad.. 
+# Hejhej, testrad..
 """
 Pacman.py holds the logic for the classic pacman game along with the main
 code to run a game.  This file is divided into three sections:
@@ -149,6 +149,9 @@ class GameState:
 
     def getGhostStates( self ):
         return self.data.agentStates[1:]
+
+    def getNumberOfGhost(self):
+        return self.getNumAgents() - 1   #only ghost, no pacman 
 
     def getGhostState( self, agentIndex ):
         if agentIndex == 0 or agentIndex >= self.getNumAgents():

@@ -88,6 +88,7 @@ class TacticalGhost( GhostAgent ):
         self.prob_scaredFlee = prob_scaredFlee
 
     def getDistribution( self, state ):
+
         # Read variables from state
         ghostState = state.getGhostState( self.index )
         legalActions = state.getLegalActions( self.index )
@@ -96,36 +97,27 @@ class TacticalGhost( GhostAgent ):
         isScared = ghostState.scaredTimer > 0
 
         #direcion de otra fantsma:
-        if (self.index == 1):
-            friendGhost = 2
-        elif (self.index == 2):
-            friendGhost = 1
+        nbrOfGhosts = state.getNumberOfGhost()
 
-        posFriendGhost = state.getGhostPosition(friendGhost)
+        #from first to last ghost. (0 = pacman)
+        for i in range(1, nbrOfGhosts + 1):
+            if not (i == self.index):
+                friendGhost = i
 
-        #print("pos ghostFriend: ", posFriendGhost, "my pos", pos)
+                posFriendGhost = state.getGhostPosition(friendGhost)
 
-        # If more than 1 leagal action.
-        #Remove action if it goes to the same posision as friend-ghost
-        if(len(legalActions) > 1):
-            new_legalActions = list(legalActions)
+                if(len(legalActions) > 1):
+                    new_legalActions = list(legalActions)
 
-            for action in new_legalActions:
-                x,y = Actions.directionToVector(action)
-                px,py = pos
+                    for action in new_legalActions:
+                        x,y = Actions.directionToVector(action)
+                        px,py = pos
 
-                pos_plusOne = (px+x),(py+y)
-                #print("pos + : ", pos_plusOne, "friend: ", posFriendGhost)
-                if (pos_plusOne == posFriendGhost):
-                    print("It is true!")
-                    new_legalActions.remove(action)
-                    legalActions = new_legalActions
-                    break
-
-        #if(direction in new_legalActions) and len(new_legalActions) > 1:
-        #    new_legalActions.remove(direction)
-
-        #print("legal actions: ", legalActions, "new:", new_legalActions)
+                        pos_plusOne = (px+x),(py+y)
+                        if (pos_plusOne == posFriendGhost):
+                            new_legalActions.remove(action)
+                            legalActions = new_legalActions
+                            break
 
         speed = 1
         if isScared: speed = 0.5
