@@ -363,7 +363,7 @@ def betterEvaluationFunction(currentGameState):
 
         def getManhattanDistances(ghosts):
             return map(lambda g: util.manhattanDistance(pos, g.getPosition()), ghosts)
-            
+
         # food distance
         foodlist = currentGameState.getFood().asList()
         manhattanDistanceToClosestFood = min(map(lambda x: util.manhattanDistance(pos, x), foodlist))
@@ -408,7 +408,7 @@ def betterEvaluationFunction(currentGameState):
 
         score = 1    * currentScore + \
         -1.5 * distanceToClosestFood + \
-        -2    * (1./distanceToClosestActiveGhost) + \
+        -100    * (1./distanceToClosestActiveGhost) + \
         -2    * distanceToClosestScaredGhost + \
         -20 * numberOfCapsulesLeft + \
         -4    * numberOfFoodsLeft
